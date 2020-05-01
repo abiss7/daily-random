@@ -10,10 +10,18 @@ class Dado extends Component {
   }
 
   render() {
+
+    let html = '';
+    if ( !this.props.dadoImg ) {
+      html = (<div className="Dado-recuadro">{this.props.valor}</div>);
+    }
+    else {
+
+      html = (<img src={`${process.env.PUBLIC_URL}/images/logo192.png`} ></img>);
+    }
+
     return (
-     
-      // <div className="Dado-recuadro">{this.props.valor}</div>
-      <img src={`${process.env.PUBLIC_URL}/images/logo192.png`} ></img>
+      html
     );
   }
 }

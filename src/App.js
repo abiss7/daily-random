@@ -10,7 +10,8 @@ const initialState = {
   equipo: [],
   //equipo: ['Ariel', 'Nacho', 'Lucas', 'Luciana', 'Claudio', 'Berni', 'Rodo Rulo Rodolf', 'Yo'],
   participante: '',
-  nuevo: ''
+  nuevo: '',
+  imagenDado: true
 };
 
 class App extends Component {
@@ -39,13 +40,14 @@ class App extends Component {
 
     this.setState({
       equipo,
-      participante
+      participante,
+      imagenDado: false
     })
   }
 
   agregar() {
 
-    if ( this.state.nuevo == null ) { return; }
+    if ( this.state.nuevo == '' ) { return; }
     
     if (!this.state.equipo.find(e => e.toUpperCase() === this.state.nuevo.toUpperCase())) {
 
@@ -78,7 +80,8 @@ class App extends Component {
 
       equipo: init.equipo,
       participante: init.participante,
-      nuevo: init.nuevo
+      nuevo: init.nuevo,
+      imagenDado: init.imagenDado
     });
   }
 
@@ -129,7 +132,7 @@ class App extends Component {
 
           <hr></hr>
           <div className="row center">
-            <Dado valor={this.state.participante || 'Daily!!!'} />  
+            <Dado valor={this.state.participante || 'Daily!!!'} dadoImg={this.state.imagenDado}/>  
           </div>
           <hr></hr>
           <div className="text-center">
@@ -139,7 +142,7 @@ class App extends Component {
               disabled={this.state.equipo.length === 0}
               >Tirar</button>             
 
-            {this.state.equipo.length > 0 &&
+            {this.state.equipo.length === 0 &&
             
             <button 
               className="btn btn-primary m-2" 
