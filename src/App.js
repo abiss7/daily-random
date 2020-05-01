@@ -108,7 +108,7 @@ class App extends Component {
               })
             }
             { this.state.equipo.length === 0 &&
-              <h2>Daily!!!</h2>
+              <h2 className="m-5">Daily!!!</h2>
             }
           </div>
 
