@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './dado.css';
+import '../../css/animated.css';
 
 class Dado extends Component {
     
@@ -13,11 +14,11 @@ class Dado extends Component {
 
     let html = '';
     if ( !this.props.dadoImg ) {
-      html = (<div className="Dado-recuadro">{this.props.valor}</div>);
+      html = (<div className="Dado-recuadro animated fadeIn">{this.props.valor}</div>);
     }
     else {
 
-      html = (<img src={`${process.env.PUBLIC_URL}/images/logo192.png`} ></img>);
+      html = (<img className="animated bounceIn" src={`${process.env.PUBLIC_URL}/images/logo192.png`} ></img>);
     }
 
     return (

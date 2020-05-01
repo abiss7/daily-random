@@ -4,13 +4,12 @@ import './App.css';
 import Mapa from './components/map/mapa';
 import Dado from './components/dado/dado';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './css/animated.css';
 
 const initialState = {
 
   equipo: [],
-  //equipo: ['Ariel', 'Nacho', 'Lucas', 'Luciana', 'Claudio', 'Berni', 'Rodo Rulo Rodolf', 'Yo'],
   participante: '',
-  nuevo: '',
   imagenDado: true
 };
 
@@ -27,8 +26,6 @@ class App extends Component {
     this.agregar = this.agregar.bind(this);
     this.quitar = this.quitar.bind(this);
     this.reset = this.reset.bind(this);
-
-    this.setNuevo = this.setNuevo.bind(this);
   }
 
   tirar() {
@@ -47,29 +44,32 @@ class App extends Component {
 
   agregar() {
 
-    if ( this.state.nuevo == '' ) { return; }
+    const nuevo = document.getElementById('txtParticipante');
+    if ( nuevo.value == '') { return; }
     
-    if (!this.state.equipo.find(e => e.toUpperCase() === this.state.nuevo.toUpperCase())) {
+    if (!this.state.equipo.find(e => e.toUpperCase() === nuevo.value.toUpperCase())) {
 
       const equipo = this.state.equipo;
-      equipo.push(this.state.nuevo);
+      equipo.push(nuevo.value);
       
+      nuevo.value = '';
       this.setState({
-        equipo,
-        nuevo: ''
+        equipo
       });
     }
   }
 
   quitar() {
 
-    if ( this.state.nuevo == null ) { return; }
+    const nuevo = document.getElementById('txtParticipante');
+    if ( nuevo.value == '') { return; }
     
     let equipo = this.state.equipo;
-    equipo = this.state.equipo.filter(e => e.toUpperCase() !== this.state.nuevo.toUpperCase());
+    equipo = this.state.equipo.filter(e => e.toUpperCase() !== nuevo.value.toUpperCase());
+
+    nuevo.value = '';
     this.setState({
-      equipo,
-      nuevo: ''
+      equipo
     });
   }
 
@@ -85,14 +85,6 @@ class App extends Component {
     });
   }
 
-  setNuevo(e) {
-
-    const nuevo = e.target.value;
-    this.setState({
-      nuevo
-    });
-  }
-
   render() {
 
       return (
@@ -101,14 +93,14 @@ class App extends Component {
             { this.state.equipo.length > 0 &&
               this.state.equipo.map(e => {
                 return (
-                  <div key={Math.random()} className="col-1 m-2">
+                  <div key={Math.random()} className="col-1 m-2 animated bounceIn">
                     <Dado valor={e} />  
                   </div>
                 )
               })
             }
             { this.state.equipo.length === 0 &&
-              <h2 className="m-5">Daily!!!</h2>
+              <h2 className="m-5 animated swing">Daily!!!</h2>
             }
           </div>
 
@@ -120,7 +112,7 @@ class App extends Component {
                     <button className="btn btn-primary" onClick={ this.quitar }>-</button>
                   </div>
                   <div className="col-4">
-                    <input className="form-control" type="text" value={this.state.nuevo} onChange={ this.setNuevo } placeholder="Participante"></input>
+                    <input id="txtParticipante" className="form-control" type="text" placeholder="Participante"></input>
                   </div>
                   <div className="col-2">
                     <button className="btn btn-primary" onClick={ this.agregar }>+</button>                    
@@ -132,7 +124,7 @@ class App extends Component {
 
           <hr></hr>
           <div className="row center">
-            <Dado valor={this.state.participante || 'Daily!!!'} dadoImg={this.state.imagenDado}/>  
+            <Dado valor={this.state.participante} dadoImg={this.state.imagenDado}/>  
           </div>
           <hr></hr>
           <div className="text-center">
